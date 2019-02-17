@@ -3,15 +3,14 @@
     $weather = "";
     $error = "";
     
-    if ($_GET['city'])
+    if (isset($_GET['city']))
     {
-      $city=$_GET['city'];
-        
-        $urlcontents= file_get_contents("https://samples.openweathermap.org/data/2.5/weather?q='$city'&appid=ca1c74639ded26a77f59fc3564106d73");
+        $ci=$_GET['city'];
+        $urlcontents= file_get_contents("https://api.openweathermap.org/data/2.5/weather?q=".$ci."&appid=e7f9e9144bbf397bba65ef41a693cf3f");
         $weatherarray = json_decode($urlcontents,true);
-        $weather="The weather in ".$city." is currently ".$weatherarray['weather'][0]['description'].".<br>";
+        $weather="The weather in ".$ci." is currently ".$weatherarray['weather'][0]['description'].".<br>";
         $temp=intval($weatherarray['main']['temp']-273);
-        $weather.="The temperature is".$temp."&deg;C";
+        $weather.="The temperature is ".$temp."&deg;C";
     }
 
 
@@ -80,7 +79,7 @@
           <form>
   <fieldset class="form-group">
     <label for="city">Enter the name of a city.</label>
-    <input type="text" class="form-control" name="city" id="city" placeholder="Eg. London, Tokyo" value = "<?php echo $_GET['city']; ?>">
+    <input type="text" class="form-control" name="city" id="city" placeholder="Eg. London, Tokyo">
   </fieldset>
   
   <button type="submit" class="btn btn-primary">Submit</button>
